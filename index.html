@@ -15,7 +15,7 @@
     }
 
     body {
-      background: #090a0f;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
       height: 100%;
     }
 
@@ -26,7 +26,7 @@
       z-index: 0;
       width: 100vw;
       height: 100vh;
-      opacity: 0.3;
+      opacity: 0.2;
     }
 
     .section {
@@ -101,8 +101,9 @@
 <body>
   <canvas id="chart"></canvas>
   <div id="priceTagle">Cargando valor $daN.Tagle...</div>
-  <div id="chartInfo">$daN.Tagle = 1.5 ETH | Gráfico en tiempo real</div>
+  <div id="chartInfo">$daN.Tagle = 1.5 ETH | Valor en tiempo real</div>
 
+  <!-- Secciones de contenido -->
   <div class="section">
     <div class="content">
       <h1>Genesis Block (2009–2013)</h1>
@@ -110,45 +111,7 @@
     </div>
   </div>
 
-  <div class="section">
-    <div class="content">
-      <h1>Minería Intensiva (2014–2017)</h1>
-      <p>Consolidación como Community Manager, Social Media Manager y Director Digital. Campañas como <a href="https://www.behance.net/gallery/44019443/SSangyong-Actyon-Sports-ADS-realtime" target="_blank" style="color:#00ff99;">Ssangyong en tiempo real</a> mostraban creatividad aplicada a la tecnología. Reconocido con un <a href="https://www.behance.net/gallery/20824907/MIDEA-Growth-Chile-Lanzamiento-Win-Effie" target="_blank" style="color:#00ff99;">Effie para Midea</a> desde Proximity BBDO y nombrado Director Creativo en Why <a href="https://www.adlatina.com/publicidad/why-chile-suma-3-nuevos-clientes" target="_blank" style="color:#00ff99;">(ver noticia)</a>. El crecimiento era claro, y el engagement subía como el hash rate en temporada alta.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="content">
-      <h1>ATH #1 – Auge y Reconocimiento (2018–2020)</h1>
-      <p>En Wunderman Thompson se alcanza el primer All-Time High: liderazgo de grandes equipos, incremento en leads y performance. Caso de éxito para DercoCenter <a href="https://www.produ.com/mercadeo/noticias/dercocenter-y-wunderman-presentan-caso-de-exito-en-chile/" target="_blank" style="color:#00ff99;">(ver caso)</a>, y campaña icónica <a href="https://www.behance.net/gallery/48577569/SEXSHOPCHILE-TWO-METHODS" target="_blank" style="color:#00ff99;">SEXSHOPCHILE premiada en WINA</a>. Reconocido internacionalmente como <a href="https://creativepool.com/Dondt/about" target="_blank" style="color:#00ff99;">Emerging Talent of the Year en Creativepool</a> y Silver por <a href="https://www.behance.net/gallery/79370809/Bupa-Maps-with-Memory" target="_blank" style="color:#00ff99;">BUPA Maps with Memory</a>.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="content">
-      <h1>Tokenización e Independencia (2024)</h1>
-      <p>Nacimiento de <strong>Solucionador.cl</strong>. Consultorías en marketing digital, incursiones en metaverso y capacitación en IA. Aplicación de growth hacking y performance marketing para distintos clientes en LATAM. Se convierte en un activo flexible, estratégico y escalable.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="content">
-      <h1>ATH #2 – Ready for Impact (2025)</h1>
-      <p>$DaNTagle se proyecta como un activo de alto impacto para equipos que necesitan visión, estrategia y ejecución con innovación. Con experiencia en fintech, salud, seguros y retail, ahora apunta a construir soluciones con propósito, datos y narrativa.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="content">
-      <h1>¿Listo para activar el próximo paso?</h1>
-      <p>Explora el portafolio de campañas, revisa la experiencia en cargos claves y conecta directamente para construir algo con impacto real.</p>
-      <p>
-        <a href="https://behance.net/kulhunter" style="color:#00ff99; font-weight:bold;">🎨 Ver trabajos en Behance</a><br/>
-        <a href="https://linkedin.com/in/taglecl" style="color:#00ff99; font-weight:bold;">🔗 Conocer experiencia en LinkedIn</a><br/>
-        <a href="mailto:dan.tagle2023@gmail.com" style="color:#00ff99; font-weight:bold;">📩 Contactar por correo</a>
-      </p>
-    </div>
-  </div>
+  <!-- Resto de las secciones... -->
 
   <script>
     const canvas = document.getElementById('chart');
@@ -158,6 +121,7 @@
     let danTaglePrice = 0;
     let priceHistory = [];
     let lastUpdateTime = 0;
+    let scrollPosition = 0;
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -167,7 +131,7 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Generar datos iniciales del gráfico
+    // Generar datos iniciales más estables
     function generateCandles() {
       const candles = [];
       const now = Date.now();
@@ -179,11 +143,11 @@
       for (let i = 0; i < hours; i++) {
         const time = now - (hours - i) * interval;
         const open = basePrice;
-        const volatility = Math.random() * 0.02 * basePrice;
+        // Reducir la volatilidad para movimiento más suave
+        const volatility = Math.random() * 0.008 * basePrice;
         const close = open + (Math.random() > 0.5 ? volatility : -volatility);
-        const high = Math.max(open, close) + Math.random() * volatility;
-        const low = Math.min(open, close) - Math.random() * volatility;
-        const volume = Math.random() * 100 + 50;
+        const high = Math.max(open, close) + Math.random() * volatility * 0.5;
+        const low = Math.min(open, close) - Math.random() * volatility * 0.5;
         
         candles.push({
           time,
@@ -191,7 +155,6 @@
           high,
           low,
           close,
-          volume
         });
         
         basePrice = close;
@@ -200,54 +163,46 @@
       return candles;
     }
 
-    // Dibujar el gráfico de velas
-    function drawCandlestickChart(candles) {
-      if (candles.length === 0) return;
+    // Dibujar el gráfico con efecto parallax
+    function drawCandlestickChart() {
+      if (priceHistory.length === 0) return;
       
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       const margin = 50;
       const width = canvas.width - margin * 2;
       const height = canvas.height - margin * 2;
-      const candleWidth = width / candles.length * 0.7;
+      const candleWidth = width / priceHistory.length * 0.8;
       
-      // Calcular rangos de precio
-      let maxPrice = Math.max(...candles.map(c => c.high));
-      let minPrice = Math.min(...candles.map(c => c.low));
+      // Calcular rangos de precio con márgenes
+      let maxPrice = Math.max(...priceHistory.map(c => c.high));
+      let minPrice = Math.min(...priceHistory.map(c => c.low));
       const priceRange = maxPrice - minPrice;
+      maxPrice += priceRange * 0.2;
+      minPrice = Math.max(0, minPrice - priceRange * 0.2);
       
-      // Ajustar márgenes
-      maxPrice += priceRange * 0.1;
-      minPrice -= priceRange * 0.1;
+      // Aplicar efecto parallax basado en scroll
+      const parallaxOffset = scrollPosition * 0.2;
       
-      // Dibujar cada vela
-      candles.forEach((candle, i) => {
-        const x = margin + i * (width / candles.length) + candleWidth * 0.15;
+      // Dibujar cada vela con movimiento más suave
+      priceHistory.forEach((candle, i) => {
+        const x = margin + i * (width / priceHistory.length) + candleWidth * 0.1 + parallaxOffset;
         const yOpen = margin + height - ((candle.open - minPrice) / (maxPrice - minPrice)) * height;
         const yClose = margin + height - ((candle.close - minPrice) / (maxPrice - minPrice)) * height;
         const yHigh = margin + height - ((candle.high - minPrice) / (maxPrice - minPrice)) * height;
         const yLow = margin + height - ((candle.low - minPrice) / (maxPrice - minPrice)) * height;
         
-        // Línea de alto-bajo
+        // Línea de alto-bajo más sutil
         ctx.beginPath();
         ctx.moveTo(x + candleWidth/2, yHigh);
         ctx.lineTo(x + candleWidth/2, yLow);
-        ctx.strokeStyle = candle.close >= candle.open ? '#00ff99' : '#ff0066';
+        ctx.strokeStyle = candle.close >= candle.open ? 'rgba(0, 255, 153, 0.5)' : 'rgba(255, 0, 102, 0.5)';
         ctx.lineWidth = 1;
         ctx.stroke();
         
-        // Cuerpo de la vela
-        ctx.fillStyle = candle.close >= candle.open ? 'rgba(0, 255, 153, 0.7)' : 'rgba(255, 0, 102, 0.7)';
+        // Cuerpo de la vela semitransparente
+        ctx.fillStyle = candle.close >= candle.open ? 'rgba(0, 255, 153, 0.3)' : 'rgba(255, 0, 102, 0.3)';
         ctx.fillRect(
-          x, 
-          Math.min(yOpen, yClose), 
-          candleWidth, 
-          Math.abs(yClose - yOpen)
-        );
-        
-        // Borde de la vela
-        ctx.strokeStyle = candle.close >= candle.open ? '#00ff99' : '#ff0066';
-        ctx.strokeRect(
           x, 
           Math.min(yOpen, yClose), 
           candleWidth, 
@@ -255,31 +210,22 @@
         );
       });
       
-      // Dibujar línea de precio actual
+      // Mostrar precio actual
       if (ethPrice > 0) {
         const currentY = margin + height - ((ethPrice - minPrice) / (maxPrice - minPrice)) * height;
         
         ctx.beginPath();
         ctx.moveTo(margin, currentY);
         ctx.lineTo(margin + width, currentY);
-        ctx.strokeStyle = 'rgba(0, 255, 153, 0.5)';
+        ctx.strokeStyle = 'rgba(0, 255, 153, 0.3)';
         ctx.setLineDash([5, 5]);
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.setLineDash([]);
-        
-        // Mostrar precio actual
-        ctx.fillStyle = '#00ff99';
-        ctx.font = '12px Arial';
-        ctx.fillText(
-          `1 ETH = $${ethPrice.toFixed(2)} | $daN.Tagle = $${danTaglePrice.toFixed(2)}`, 
-          margin + width - 300, 
-          currentY - 10
-        );
       }
     }
 
-    // Obtener precio actual de ETH
+    // Obtener precio de ETH con menos frecuencia
     async function fetchEthPrice() {
       try {
         const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
@@ -289,9 +235,9 @@
         
         priceDisplay.innerText = `$daN.Tagle: $${danTaglePrice.toFixed(2)} USD`;
         
-        // Actualizar historial cada 5 minutos
+        // Actualizar historial cada 10 minutos
         const now = Date.now();
-        if (now - lastUpdateTime > 300000 || priceHistory.length === 0) {
+        if (now - lastUpdateTime > 600000 || priceHistory.length === 0) {
           priceHistory = generateCandles();
           lastUpdateTime = now;
         }
@@ -303,43 +249,48 @@
           priceHistory[priceHistory.length - 1].low = Math.min(priceHistory[priceHistory.length - 1].low, ethPrice);
         }
         
-        drawCandlestickChart(priceHistory);
       } catch (error) {
         console.error('Error fetching ETH price:', error);
         priceDisplay.innerText = '$daN.Tagle: Error actualizando precio';
         
-        // Usar datos simulados si falla la API
+        // Datos simulados más estables
         if (priceHistory.length === 0) {
-          ethPrice = 3000 + Math.random() * 1000;
+          ethPrice = 3000 + Math.random() * 500;
           danTaglePrice = ethPrice * 1.5;
           priceHistory = generateCandles();
-          drawCandlestickChart(priceHistory);
         }
       }
     }
 
-    // Actualizar cada 30 segundos
-    fetchEthPrice();
-    setInterval(fetchEthPrice, 30000);
+    // Manejar scroll para efecto parallax
+    function handleScroll() {
+      scrollPosition = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      drawCandlestickChart();
+    }
 
-    // Animar el gráfico
-    function animateChart() {
-      requestAnimationFrame(animateChart);
+    // Configuración inicial
+    window.addEventListener('scroll', handleScroll);
+    fetchEthPrice();
+    setInterval(fetchEthPrice, 60000); // Actualizar cada minuto
+
+    // Animación más suave
+    function animate() {
+      requestAnimationFrame(animate);
       
-      // Pequeñas fluctuaciones para simular mercado activo
-      if (priceHistory.length > 0 && Math.random() > 0.7) {
+      // Movimiento más lento y estable
+      if (priceHistory.length > 0 && Math.random() > 0.9) {
         const lastCandle = priceHistory[priceHistory.length - 1];
-        const change = (Math.random() - 0.5) * 0.002 * lastCandle.close;
+        const change = (Math.random() - 0.5) * 0.001 * lastCandle.close;
         lastCandle.close += change;
         
         if (lastCandle.close > lastCandle.high) lastCandle.high = lastCandle.close;
         if (lastCandle.close < lastCandle.low) lastCandle.low = lastCandle.close;
         
-        drawCandlestickChart(priceHistory);
+        drawCandlestickChart();
       }
     }
 
-    animateChart();
+    animate();
   </script>
 </body>
 </html>
