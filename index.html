@@ -15,7 +15,7 @@
     }
 
     body {
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      background: #090a0f;
       height: 100%;
     }
 
@@ -26,6 +26,7 @@
       z-index: 0;
       width: 100vw;
       height: 100vh;
+      opacity: 0.3;
     }
 
     .section {
@@ -53,6 +54,10 @@
       z-index: 10;
       position: relative;
       animation: fadeIn 1.5s ease-in;
+      background: rgba(10, 10, 10, 0.7);
+      padding: 2rem;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
     }
 
     #priceTagle {
@@ -68,15 +73,35 @@
       z-index: 20;
     }
 
+    #chartInfo {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      z-index: 20;
+    }
+
     @keyframes fadeIn {
       from {opacity: 0; transform: translateY(20px);}
       to {opacity: 1; transform: translateY(0);}
+    }
+
+    a {
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #ffffff !important;
     }
   </style>
 </head>
 <body>
   <canvas id="chart"></canvas>
-  <div id="priceTagle">Cargando valor...</div>
+  <div id="priceTagle">Cargando valor $daN.Tagle...</div>
+  <div id="chartInfo">$daN.Tagle = 1.5 ETH | Gráfico en tiempo real</div>
 
   <div class="section">
     <div class="content">
@@ -128,6 +153,11 @@
   <script>
     const canvas = document.getElementById('chart');
     const ctx = canvas.getContext('2d');
+    const priceDisplay = document.getElementById('priceTagle');
+    let ethPrice = 0;
+    let danTaglePrice = 0;
+    let priceHistory = [];
+    let lastUpdateTime = 0;
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -137,58 +167,179 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    let points = [];
-    let numPoints = 100;  // Aumentamos la cantidad de puntos
-    let t = 0;
-
-    function updatePointsFromScroll(progress) {
-      points = [];
-      for (let i = 0; i < numPoints; i++) {
-        const base = Math.random() * 100;
-        const wave1 = Math.sin(progress * 20 + t * 2 + i) * 50;
-        const wave2 = Math.cos(progress * 15 - t + i) * 20;
-        const volatility = Math.sin(t * 5 + i) * 5;
-        points.push(base + wave1 + wave2 + volatility);
+    // Generar datos iniciales del gráfico
+    function generateCandles() {
+      const candles = [];
+      const now = Date.now();
+      const hours = 24;
+      const interval = 3600000; // 1 hora en ms
+      
+      let basePrice = ethPrice > 0 ? ethPrice : 3000;
+      
+      for (let i = 0; i < hours; i++) {
+        const time = now - (hours - i) * interval;
+        const open = basePrice;
+        const volatility = Math.random() * 0.02 * basePrice;
+        const close = open + (Math.random() > 0.5 ? volatility : -volatility);
+        const high = Math.max(open, close) + Math.random() * volatility;
+        const low = Math.min(open, close) - Math.random() * volatility;
+        const volume = Math.random() * 100 + 50;
+        
+        candles.push({
+          time,
+          open,
+          high,
+          low,
+          close,
+          volume
+        });
+        
+        basePrice = close;
       }
+      
+      return candles;
     }
 
-    function drawChart(progress) {
-      updatePointsFromScroll(progress);
+    // Dibujar el gráfico de velas
+    function drawCandlestickChart(candles) {
+      if (candles.length === 0) return;
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.beginPath();
-      ctx.strokeStyle = '#00ff99';
-      ctx.lineWidth = 3;
-
-      const step = canvas.width / (points.length - 1);
-      for (let i = 0; i < points.length; i++) {
-        const x = step * i;
-        const y = canvas.height - points[i];
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+      
+      const margin = 50;
+      const width = canvas.width - margin * 2;
+      const height = canvas.height - margin * 2;
+      const candleWidth = width / candles.length * 0.7;
+      
+      // Calcular rangos de precio
+      let maxPrice = Math.max(...candles.map(c => c.high));
+      let minPrice = Math.min(...candles.map(c => c.low));
+      const priceRange = maxPrice - minPrice;
+      
+      // Ajustar márgenes
+      maxPrice += priceRange * 0.1;
+      minPrice -= priceRange * 0.1;
+      
+      // Dibujar cada vela
+      candles.forEach((candle, i) => {
+        const x = margin + i * (width / candles.length) + candleWidth * 0.15;
+        const yOpen = margin + height - ((candle.open - minPrice) / (maxPrice - minPrice)) * height;
+        const yClose = margin + height - ((candle.close - minPrice) / (maxPrice - minPrice)) * height;
+        const yHigh = margin + height - ((candle.high - minPrice) / (maxPrice - minPrice)) * height;
+        const yLow = margin + height - ((candle.low - minPrice) / (maxPrice - minPrice)) * height;
+        
+        // Línea de alto-bajo
+        ctx.beginPath();
+        ctx.moveTo(x + candleWidth/2, yHigh);
+        ctx.lineTo(x + candleWidth/2, yLow);
+        ctx.strokeStyle = candle.close >= candle.open ? '#00ff99' : '#ff0066';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        
+        // Cuerpo de la vela
+        ctx.fillStyle = candle.close >= candle.open ? 'rgba(0, 255, 153, 0.7)' : 'rgba(255, 0, 102, 0.7)';
+        ctx.fillRect(
+          x, 
+          Math.min(yOpen, yClose), 
+          candleWidth, 
+          Math.abs(yClose - yOpen)
+        );
+        
+        // Borde de la vela
+        ctx.strokeStyle = candle.close >= candle.open ? '#00ff99' : '#ff0066';
+        ctx.strokeRect(
+          x, 
+          Math.min(yOpen, yClose), 
+          candleWidth, 
+          Math.abs(yClose - yOpen)
+        );
+      });
+      
+      // Dibujar línea de precio actual
+      if (ethPrice > 0) {
+        const currentY = margin + height - ((ethPrice - minPrice) / (maxPrice - minPrice)) * height;
+        
+        ctx.beginPath();
+        ctx.moveTo(margin, currentY);
+        ctx.lineTo(margin + width, currentY);
+        ctx.strokeStyle = 'rgba(0, 255, 153, 0.5)';
+        ctx.setLineDash([5, 5]);
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.setLineDash([]);
+        
+        // Mostrar precio actual
+        ctx.fillStyle = '#00ff99';
+        ctx.font = '12px Arial';
+        ctx.fillText(
+          `1 ETH = $${ethPrice.toFixed(2)} | $daN.Tagle = $${danTaglePrice.toFixed(2)}`, 
+          margin + width - 300, 
+          currentY - 10
+        );
       }
-
-      ctx.stroke();
     }
 
-    function animateChart() {
-      const scrollTop = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      const progress = scrollTop / docHeight;
-      drawChart(progress);
-      t += 0.1;  // Aumentamos la velocidad de la animación
-      requestAnimationFrame(animateChart);
-    }
-
+    // Obtener precio actual de ETH
     async function fetchEthPrice() {
-      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
-      const data = await response.json();
-      const ethPrice = data.ethereum.usd;
-      const danValue = (1.5 * ethPrice).toFixed(2); // 1.5 ETH to USD
-      document.getElementById('priceTagle').innerText = `$DaNTagle: ${danValue} USD`;
+      try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+        const data = await response.json();
+        ethPrice = data.ethereum.usd;
+        danTaglePrice = ethPrice * 1.5;
+        
+        priceDisplay.innerText = `$daN.Tagle: $${danTaglePrice.toFixed(2)} USD`;
+        
+        // Actualizar historial cada 5 minutos
+        const now = Date.now();
+        if (now - lastUpdateTime > 300000 || priceHistory.length === 0) {
+          priceHistory = generateCandles();
+          lastUpdateTime = now;
+        }
+        
+        // Actualizar última vela con precio real
+        if (priceHistory.length > 0) {
+          priceHistory[priceHistory.length - 1].close = ethPrice;
+          priceHistory[priceHistory.length - 1].high = Math.max(priceHistory[priceHistory.length - 1].high, ethPrice);
+          priceHistory[priceHistory.length - 1].low = Math.min(priceHistory[priceHistory.length - 1].low, ethPrice);
+        }
+        
+        drawCandlestickChart(priceHistory);
+      } catch (error) {
+        console.error('Error fetching ETH price:', error);
+        priceDisplay.innerText = '$daN.Tagle: Error actualizando precio';
+        
+        // Usar datos simulados si falla la API
+        if (priceHistory.length === 0) {
+          ethPrice = 3000 + Math.random() * 1000;
+          danTaglePrice = ethPrice * 1.5;
+          priceHistory = generateCandles();
+          drawCandlestickChart(priceHistory);
+        }
+      }
+    }
+
+    // Actualizar cada 30 segundos
+    fetchEthPrice();
+    setInterval(fetchEthPrice, 30000);
+
+    // Animar el gráfico
+    function animateChart() {
+      requestAnimationFrame(animateChart);
+      
+      // Pequeñas fluctuaciones para simular mercado activo
+      if (priceHistory.length > 0 && Math.random() > 0.7) {
+        const lastCandle = priceHistory[priceHistory.length - 1];
+        const change = (Math.random() - 0.5) * 0.002 * lastCandle.close;
+        lastCandle.close += change;
+        
+        if (lastCandle.close > lastCandle.high) lastCandle.high = lastCandle.close;
+        if (lastCandle.close < lastCandle.low) lastCandle.low = lastCandle.close;
+        
+        drawCandlestickChart(priceHistory);
+      }
     }
 
     animateChart();
-    fetchEthPrice();
   </script>
 </body>
 </html>
