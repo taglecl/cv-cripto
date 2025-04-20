@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dan tagle - full stack marketer</title>
+  <title>Dan Tagle - Full Stack Marketer</title>
   <style>
     html, body {
       margin: 0;
@@ -76,9 +76,8 @@
 </head>
 <body>
   <canvas id="chart"></canvas>
-  <div id="priceTagle">$DaNTagle: 0.003420 USDT</div>
+  <div id="priceTagle">Cargando valor...</div>
 
-  <!-- Genesis Block -->
   <div class="section">
     <div class="content">
       <h1>Genesis Block (2009–2013)</h1>
@@ -86,31 +85,20 @@
     </div>
   </div>
 
-  <!-- Minería Intensiva -->
   <div class="section">
-    <div class="content">
-      <h1>Minería Intensiva (2014–2017)</h1>
-      <p>Consolidación como Community Manager, Social Media Manager y Director Digital. Campañas como <a href="https://www.behance.net/gallery/44019443/SSangyong-Actyon-Sports-ADS-realtime" target="_blank" style="color:#00ff99;">Ssangyong en tiempo real</a> mostraban creatividad aplicada a la tecnología. Reconocido con un <a href="https://www.behance.net/gallery/20824907/MIDEA-Growth-Chile-Lanzamiento-Win-Effie" target="_blank" style="color:#00ff99;">Effie para Midea</a> desde Proximity BBDO y nombrado Director Creativo en Why <a href="https://www.adlatina.com/publicidad/why-chile-suma-3-nuevos-clientes" target="_blank" style="color:#00ff99;">(ver noticia)</a>. El crecimiento era claro, y el engagement subía como el hash rate en temporada alta.</p>
-    </div>
+  <div class="content">
+    <h1>Minería Intensiva (2014–2017)</h1>
+    <p>Consolidación como Community Manager, Social Media Manager y Director Digital. Campañas como <a href="https://www.behance.net/gallery/44019443/SSangyong-Actyon-Sports-ADS-realtime" target="_blank" style="color:#00ff99;">Ssangyong en tiempo real</a> mostraban creatividad aplicada a la tecnología. Reconocido con un <a href="https://www.behance.net/gallery/20824907/MIDEA-Growth-Chile-Lanzamiento-Win-Effie" target="_blank" style="color:#00ff99;">Effie para Midea</a> desde Proximity BBDO y nombrado Director Creativo en Why <a href="https://www.adlatina.com/publicidad/why-chile-suma-3-nuevos-clientes" target="_blank" style="color:#00ff99;">(ver noticia)</a>. El crecimiento era claro, y el engagement subía como el hash rate en temporada alta.</p>
   </div>
+</div>
 
-  <!-- ATH #1 -->
   <div class="section">
-    <div class="content">
-      <h1>ATH #1 – Auge y Reconocimiento (2018–2020)</h1>
-      <p>En Wunderman Thompson se alcanza el primer All-Time High: liderazgo de grandes equipos, incremento en leads y performance. Caso de éxito para DercoCenter <a href="https://www.produ.com/mercadeo/noticias/dercocenter-y-wunderman-presentan-caso-de-exito-en-chile/" target="_blank" style="color:#00ff99;">(ver caso)</a>, y campaña icónica <a href="https://www.behance.net/gallery/48577569/SEXSHOPCHILE-TWO-METHODS" target="_blank" style="color:#00ff99;">SEXSHOPCHILE premiada en WINA</a>. Reconocido internacionalmente como <a href="https://creativepool.com/Dondt/about" target="_blank" style="color:#00ff99;">Emerging Talent of the Year en Creativepool</a> y Silver por <a href="https://www.behance.net/gallery/79370809/Bupa-Maps-with-Memory" target="_blank" style="color:#00ff99;">BUPA Maps with Memory</a>.</p>
-    </div>
+  <div class="content">
+    <h1>ATH #1 – Auge y Reconocimiento (2018–2020)</h1>
+    <p>En Wunderman Thompson se alcanza el primer All-Time High: liderazgo de grandes equipos, incremento en leads y performance. Caso de éxito para DercoCenter <a href="https://www.produ.com/mercadeo/noticias/dercocenter-y-wunderman-presentan-caso-de-exito-en-chile/" target="_blank" style="color:#00ff99;">(ver caso)</a>, y campaña icónica <a href="https://www.behance.net/gallery/48577569/SEXSHOPCHILE-TWO-METHODS" target="_blank" style="color:#00ff99;">SEXSHOPCHILE premiada en WINA</a>. Reconocido internacionalmente como <a href="https://creativepool.com/Dondt/about" target="_blank" style="color:#00ff99;">Emerging Talent of the Year en Creativepool</a> y Silver por <a href="https://www.behance.net/gallery/79370809/Bupa-Maps-with-Memory" target="_blank" style="color:#00ff99;">BUPA Maps with Memory</a>.</p>
   </div>
+</div>
 
-  <!-- Bear Market Estratégico -->
-  <div class="section">
-    <div class="content">
-      <h1>Bear Market Estratégico (2021–2023)</h1>
-      <p>Una etapa de consolidación silenciosa, pero productiva. Dirección digital en Espinaca y campañas de alto impacto como la <a href="https://www.behance.net/gallery/139685235/CorreosChile-Navidad" target="_blank" style="color:#00ff99;">Navidad de CorreosChile</a>, que logró un altísimo engagement. Expansión del equipo, optimización de recursos, e integración paulatina de IA en procesos creativos y estratégicos.</p>
-    </div>
-  </div>
-
-  <!-- Tokenización e Independencia -->
   <div class="section">
     <div class="content">
       <h1>Tokenización e Independencia (2024)</h1>
@@ -118,7 +106,6 @@
     </div>
   </div>
 
-  <!-- ATH #2 -->
   <div class="section">
     <div class="content">
       <h1>ATH #2 – Ready for Impact (2025)</h1>
@@ -126,7 +113,6 @@
     </div>
   </div>
 
-  <!-- Call to Action -->
   <div class="section">
     <div class="content">
       <h1>¿Listo para activar el próximo paso?</h1>
@@ -192,15 +178,16 @@
       requestAnimationFrame(animateChart);
     }
 
-    animateChart();
+    async function fetchEthPrice() {
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+      const data = await response.json();
+      const ethPrice = data.ethereum.usd;
+      const danValue = (1.5 * ethPrice).toFixed(2); // 1.5 ETH to USD
+      document.getElementById('priceTagle').innerText = `$DaNTagle: ${danValue} USD`;
+    }
 
-    setInterval(() => {
-      const fluctuation = (Math.random() * 0.0001).toFixed(6);
-      const direction = Math.random() > 0.5 ? 1 : -1;
-      const current = parseFloat(document.getElementById("priceTagle").textContent.match(/[\d.]+/)[0]);
-      const newPrice = (current + fluctuation * direction).toFixed(6);
-      document.getElementById("priceTagle").textContent = `$DaNTagle: ${newPrice} USDT`;
-    }, 1500);
+    animateChart();
+    fetchEthPrice();
   </script>
 </body>
 </html>
