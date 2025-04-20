@@ -86,18 +86,18 @@
   </div>
 
   <div class="section">
-  <div class="content">
-    <h1>Minería Intensiva (2014–2017)</h1>
-    <p>Consolidación como Community Manager, Social Media Manager y Director Digital. Campañas como <a href="https://www.behance.net/gallery/44019443/SSangyong-Actyon-Sports-ADS-realtime" target="_blank" style="color:#00ff99;">Ssangyong en tiempo real</a> mostraban creatividad aplicada a la tecnología. Reconocido con un <a href="https://www.behance.net/gallery/20824907/MIDEA-Growth-Chile-Lanzamiento-Win-Effie" target="_blank" style="color:#00ff99;">Effie para Midea</a> desde Proximity BBDO y nombrado Director Creativo en Why <a href="https://www.adlatina.com/publicidad/why-chile-suma-3-nuevos-clientes" target="_blank" style="color:#00ff99;">(ver noticia)</a>. El crecimiento era claro, y el engagement subía como el hash rate en temporada alta.</p>
+    <div class="content">
+      <h1>Minería Intensiva (2014–2017)</h1>
+      <p>Consolidación como Community Manager, Social Media Manager y Director Digital. Campañas como <a href="https://www.behance.net/gallery/44019443/SSangyong-Actyon-Sports-ADS-realtime" target="_blank" style="color:#00ff99;">Ssangyong en tiempo real</a> mostraban creatividad aplicada a la tecnología. Reconocido con un <a href="https://www.behance.net/gallery/20824907/MIDEA-Growth-Chile-Lanzamiento-Win-Effie" target="_blank" style="color:#00ff99;">Effie para Midea</a> desde Proximity BBDO y nombrado Director Creativo en Why <a href="https://www.adlatina.com/publicidad/why-chile-suma-3-nuevos-clientes" target="_blank" style="color:#00ff99;">(ver noticia)</a>. El crecimiento era claro, y el engagement subía como el hash rate en temporada alta.</p>
+    </div>
   </div>
-</div>
 
   <div class="section">
-  <div class="content">
-    <h1>ATH #1 – Auge y Reconocimiento (2018–2020)</h1>
-    <p>En Wunderman Thompson se alcanza el primer All-Time High: liderazgo de grandes equipos, incremento en leads y performance. Caso de éxito para DercoCenter <a href="https://www.produ.com/mercadeo/noticias/dercocenter-y-wunderman-presentan-caso-de-exito-en-chile/" target="_blank" style="color:#00ff99;">(ver caso)</a>, y campaña icónica <a href="https://www.behance.net/gallery/48577569/SEXSHOPCHILE-TWO-METHODS" target="_blank" style="color:#00ff99;">SEXSHOPCHILE premiada en WINA</a>. Reconocido internacionalmente como <a href="https://creativepool.com/Dondt/about" target="_blank" style="color:#00ff99;">Emerging Talent of the Year en Creativepool</a> y Silver por <a href="https://www.behance.net/gallery/79370809/Bupa-Maps-with-Memory" target="_blank" style="color:#00ff99;">BUPA Maps with Memory</a>.</p>
+    <div class="content">
+      <h1>ATH #1 – Auge y Reconocimiento (2018–2020)</h1>
+      <p>En Wunderman Thompson se alcanza el primer All-Time High: liderazgo de grandes equipos, incremento en leads y performance. Caso de éxito para DercoCenter <a href="https://www.produ.com/mercadeo/noticias/dercocenter-y-wunderman-presentan-caso-de-exito-en-chile/" target="_blank" style="color:#00ff99;">(ver caso)</a>, y campaña icónica <a href="https://www.behance.net/gallery/48577569/SEXSHOPCHILE-TWO-METHODS" target="_blank" style="color:#00ff99;">SEXSHOPCHILE premiada en WINA</a>. Reconocido internacionalmente como <a href="https://creativepool.com/Dondt/about" target="_blank" style="color:#00ff99;">Emerging Talent of the Year en Creativepool</a> y Silver por <a href="https://www.behance.net/gallery/79370809/Bupa-Maps-with-Memory" target="_blank" style="color:#00ff99;">BUPA Maps with Memory</a>.</p>
+    </div>
   </div>
-</div>
 
   <div class="section">
     <div class="content">
@@ -137,17 +137,18 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    const keyMoments = [100, 200, 400, 300, 350, 500];
-    const points = [...keyMoments];
+    let points = [];
+    let numPoints = 100;  // Aumentamos la cantidad de puntos
     let t = 0;
 
     function updatePointsFromScroll(progress) {
-      for (let i = 0; i < points.length; i++) {
-        const base = keyMoments[i];
-        const wave1 = Math.sin(progress * 20 + t * 2 + i) * 20;
-        const wave2 = Math.cos(progress * 15 - t + i) * 10;
+      points = [];
+      for (let i = 0; i < numPoints; i++) {
+        const base = Math.random() * 100;
+        const wave1 = Math.sin(progress * 20 + t * 2 + i) * 50;
+        const wave2 = Math.cos(progress * 15 - t + i) * 20;
         const volatility = Math.sin(t * 5 + i) * 5;
-        points[i] = base + wave1 + wave2 + volatility;
+        points.push(base + wave1 + wave2 + volatility);
       }
     }
 
@@ -174,7 +175,7 @@
       const docHeight = document.body.scrollHeight - window.innerHeight;
       const progress = scrollTop / docHeight;
       drawChart(progress);
-      t += 0.01;
+      t += 0.1;  // Aumentamos la velocidad de la animación
       requestAnimationFrame(animateChart);
     }
 
