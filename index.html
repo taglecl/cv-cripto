@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>$DaNTagle - Tu próximo ATH</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: #0d0d0d;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .section h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      max-width: 700px;
+    }
+
+    .gradient {
+      background: linear-gradient(to bottom, #1e1e1e, #0d0d0d);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="chart"></canvas>
+
+  <div class="section gradient">
+    <div class="content">
+      <h1>Genesis Block (2009–2013)</h1>
+      <p>Minería de ideas en ingeniería y publicidad. El valor de $DaNTagle comienza a existir.</p>
+    </div>
+  </div>
+
+  <div class="section gradient">
+    <div class="content">
+      <h1>Primer Bull Market (2014–2017)</h1>
+      <p>Creatividad, redes sociales y contenido. Empieza la validación en agencias.</p>
+    </div>
+  </div>
+
+  <div class="section gradient">
+    <div class="content">
+      <h1>All Time High (2018–2020)</h1>
+      <p>$DaNTagle dispara su valor con liderazgo, premios y resultados medibles.</p>
+    </div>
+  </div>
+
+  <div class="section gradient">
+    <div class="content">
+      <h1>Bear Market Estratégico (2021–2023)</h1>
+      <p>Reorganización, aprendizaje de IA y exploración de nuevos territorios.</p>
+    </div>
+  </div>
+
+  <div class="section gradient">
+    <div class="content">
+      <h1>Solucionador y el renacer (2024)</h1>
+      <p>Independencia, innovación y la construcción de una DApp de impacto.</p>
+    </div>
+  </div>
+
+  <div class="section gradient">
+    <div class="content">
+      <h1>ATH con Orionx (2025)</h1>
+      <p>El momento de staking. Esta es la red ideal para llegar al máximo histórico.</p>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('chart');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    let points = [
+      100, 150, 300, 200, 400, 220, 180, 300 // valores verticales del gráfico
+    ];
+
+    window.addEventListener('scroll', () => {
+      const scroll = window.scrollY;
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      const t = scroll / maxScroll;
+      drawChart(t);
+    });
+
+    function drawChart(t) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.strokeStyle = '#00ff99';
+      ctx.lineWidth = 4;
+
+      const step = canvas.width / (points.length - 1);
+      for (let i = 0; i < points.length; i++) {
+        const x = step * i;
+        const y = canvas.height - (points[i] + Math.sin(t * 10 + i) * 10);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+
+      ctx.stroke();
+    }
+
+    draw
