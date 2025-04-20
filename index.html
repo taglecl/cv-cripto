@@ -109,7 +109,7 @@
   <div id="priceTagle">Cargando valor $daN.Tagle...</div>
   <div id="chartInfo">$daN.Tagle = 1.5 ETH | Valor en tiempo real</div>
 
-   <div class="section">
+    <div class="section">
     <div class="content">
       <h1>🧭 Roadmap Dan Tagle – Full Stack Marketer </h1>
       <p>No es un CV. Es una cadena de bloques narrativos.
@@ -121,7 +121,7 @@ Desde el Genesis Block hasta el próximo ATH: esto no es solo marketing, es proo
 ¿Listos para scrollear?</p>
     </div>
   </div>
-
+  
   <div class="section">
     <div class="content">
       <h1>Genesis Block (2009–2013)</h1>
@@ -159,15 +159,12 @@ Desde el Genesis Block hasta el próximo ATH: esto no es solo marketing, es proo
 
   <div class="section">
     <div class="content">
-      <h1>¿Listos para minar juntos la próxima gran idea?</h1>
-      <p>BUY:.</p>
+      <h1>¿Listo para activar el próximo paso?</h1>
+      <p>Explora el portafolio de campañas, revisa la experiencia en cargos claves y conecta directamente para construir algo con impacto real.</p>
       <p>
-        <a href="https://behance.net/kulhunter" style="color:#00ff99; font-weight:bold;">🎨 Book de trabajos en Behance</a><br/>
-        <a href="https://linkedin.com/in/taglecl" style="color:#00ff99; font-weight:bold;">🔗 Experiencia detallada en LinkedIn</a><br/>
+        <a href="https://behance.net/kulhunter" style="color:#00ff99; font-weight:bold;">🎨 Ver trabajos en Behance</a><br/>
+        <a href="https://linkedin.com/in/taglecl" style="color:#00ff99; font-weight:bold;">🔗 Conocer experiencia en LinkedIn</a><br/>
         <a href="mailto:dan.tagle2023@gmail.com" style="color:#00ff99; font-weight:bold;">📩 Contactar por correo</a>
-        
-        <a href="https://wa.link/wc5ij4" style="color:#00ff99; font-weight:bold;">📱 Envíar un WhatsApp</a>
-
       </p>
     </div>
   </div>
@@ -193,54 +190,160 @@ Desde el Genesis Block hasta el próximo ATH: esto no es solo marketing, es proo
     // Generar datos iniciales más estables
     function generateCandles() {
       const candles = [];
-      for (let i = 0; i < 200; i++) {
+      const now = Date.now();
+      const hours = 24;
+      const interval = 3600000; // 1 hora en ms
+      
+      let basePrice = ethPrice > 0 ? ethPrice : 3000;
+      
+      for (let i = 0; i < hours; i++) {
+        const time = now - (hours - i) * interval;
+        const open = basePrice;
+        // Reducir la volatilidad para movimiento más suave
+        const volatility = Math.random() * 0.008 * basePrice;
+        const close = open + (Math.random() > 0.5 ? volatility : -volatility);
+        const high = Math.max(open, close) + Math.random() * volatility * 0.5;
+        const low = Math.min(open, close) - Math.random() * volatility * 0.5;
+        
         candles.push({
-          time: Date.now() + i * 60000, // Cada "candle" es un minuto
-          open: Math.random() * 3000 + 1000,
-          high: Math.random() * 3000 + 2000,
-          low: Math.random() * 3000 + 1000,
-          close: Math.random() * 3000 + 1500
+          time,
+          open,
+          high,
+          low,
+          close,
         });
+        
+        basePrice = close;
       }
+      
       return candles;
     }
 
-    const candles = generateCandles();
-
-    function updateChart() {
-      if (Date.now() - lastUpdateTime >= 60000) {
-        // Update every 60 seconds with new price values
-        ethPrice = Math.random() * 1000 + 1500;
-        danTaglePrice = ethPrice * 0.0005;  // Este es solo un ejemplo de cómo se puede ajustar.
-        priceHistory.push({ ethPrice, danTaglePrice });
-
-        if (priceHistory.length > 100) {
-          priceHistory.shift(); // Keep the array at a manageable size
-        }
-
-        lastUpdateTime = Date.now();
-      }
-
-      // Clear the canvas before drawing
+    // Dibujar el gráfico con efecto parallax
+    function drawCandlestickChart() {
+      if (priceHistory.length === 0) return;
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw chart
-      ctx.beginPath();
-      ctx.moveTo(0, canvas.height - danTaglePrice);
-      for (let i = 0; i < priceHistory.length; i++) {
-        ctx.lineTo(i * 10, canvas.height - priceHistory[i].danTaglePrice);
+      
+      const margin = 50;
+      const width = canvas.width - margin * 2;
+      const height = canvas.height - margin * 2;
+      const candleWidth = width / priceHistory.length * 0.8;
+      
+      // Calcular rangos de precio con márgenes
+      let maxPrice = Math.max(...priceHistory.map(c => c.high));
+      let minPrice = Math.min(...priceHistory.map(c => c.low));
+      const priceRange = maxPrice - minPrice;
+      maxPrice += priceRange * 0.2;
+      minPrice = Math.max(0, minPrice - priceRange * 0.2);
+      
+      // Aplicar efecto parallax basado en scroll
+      const parallaxOffset = scrollPosition * 0.2;
+      
+      // Dibujar cada vela con movimiento más suave
+      priceHistory.forEach((candle, i) => {
+        const x = margin + i * (width / priceHistory.length) + candleWidth * 0.1 + parallaxOffset;
+        const yOpen = margin + height - ((candle.open - minPrice) / (maxPrice - minPrice)) * height;
+        const yClose = margin + height - ((candle.close - minPrice) / (maxPrice - minPrice)) * height;
+        const yHigh = margin + height - ((candle.high - minPrice) / (maxPrice - minPrice)) * height;
+        const yLow = margin + height - ((candle.low - minPrice) / (maxPrice - minPrice)) * height;
+        
+        // Línea de alto-bajo más sutil
+        ctx.beginPath();
+        ctx.moveTo(x + candleWidth/2, yHigh);
+        ctx.lineTo(x + candleWidth/2, yLow);
+        ctx.strokeStyle = candle.close >= candle.open ? 'rgba(0, 255, 153, 0.5)' : 'rgba(255, 0, 102, 0.5)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        
+        // Cuerpo de la vela semitransparente
+        ctx.fillStyle = candle.close >= candle.open ? 'rgba(0, 255, 153, 0.3)' : 'rgba(255, 0, 102, 0.3)';
+        ctx.fillRect(
+          x, 
+          Math.min(yOpen, yClose), 
+          candleWidth, 
+          Math.abs(yClose - yOpen)
+        );
+      });
+      
+      // Mostrar precio actual
+      if (ethPrice > 0) {
+        const currentY = margin + height - ((ethPrice - minPrice) / (maxPrice - minPrice)) * height;
+        
+        ctx.beginPath();
+        ctx.moveTo(margin, currentY);
+        ctx.lineTo(margin + width, currentY);
+        ctx.strokeStyle = 'rgba(0, 255, 153, 0.3)';
+        ctx.setLineDash([5, 5]);
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.setLineDash([]);
       }
-      ctx.strokeStyle = "#00ff99";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      // Update the price display
-      priceDisplay.textContent = `$${danTaglePrice.toFixed(2)}`;
     }
 
+    // Obtener precio de ETH con menos frecuencia
+    async function fetchEthPrice() {
+      try {
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+        const data = await response.json();
+        ethPrice = data.ethereum.usd;
+        danTaglePrice = ethPrice * 1.5;
+        
+        priceDisplay.innerText = `$daN.Tagle: $${danTaglePrice.toFixed(2)} USD`;
+        
+        // Actualizar historial cada 10 minutos
+        const now = Date.now();
+        if (now - lastUpdateTime > 600000 || priceHistory.length === 0) {
+          priceHistory = generateCandles();
+          lastUpdateTime = now;
+        }
+        
+        // Actualizar última vela con precio real
+        if (priceHistory.length > 0) {
+          priceHistory[priceHistory.length - 1].close = ethPrice;
+          priceHistory[priceHistory.length - 1].high = Math.max(priceHistory[priceHistory.length - 1].high, ethPrice);
+          priceHistory[priceHistory.length - 1].low = Math.min(priceHistory[priceHistory.length - 1].low, ethPrice);
+        }
+        
+      } catch (error) {
+        console.error('Error fetching ETH price:', error);
+        priceDisplay.innerText = '$daN.Tagle: Error actualizando precio';
+        
+        // Datos simulados más estables
+        if (priceHistory.length === 0) {
+          ethPrice = 3000 + Math.random() * 500;
+          danTaglePrice = ethPrice * 1.5;
+          priceHistory = generateCandles();
+        }
+      }
+    }
+
+    // Manejar scroll para efecto parallax
+    function handleScroll() {
+      scrollPosition = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      drawCandlestickChart();
+    }
+
+    // Configuración inicial
+    window.addEventListener('scroll', handleScroll);
+    fetchEthPrice();
+    setInterval(fetchEthPrice, 60000); // Actualizar cada minuto
+
+    // Animación más suave
     function animate() {
-      updateChart();
       requestAnimationFrame(animate);
+      
+      // Movimiento más lento y estable
+      if (priceHistory.length > 0 && Math.random() > 0.9) {
+        const lastCandle = priceHistory[priceHistory.length - 1];
+        const change = (Math.random() - 0.5) * 0.001 * lastCandle.close;
+        lastCandle.close += change;
+        
+        if (lastCandle.close > lastCandle.high) lastCandle.high = lastCandle.close;
+        if (lastCandle.close < lastCandle.low) lastCandle.low = lastCandle.close;
+        
+        drawCandlestickChart();
+      }
     }
 
     animate();
