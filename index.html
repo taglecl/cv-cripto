@@ -3,94 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>$DaNTagle - Tu próximo ATH</title>
+  <title>$DaNTagle - El Valor del Talento</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: #0d0d0d;
-      color: #ffffff;
+      padding: 0;
       overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: white;
     }
-
-    .section {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      position: relative;
-      padding: 2rem;
-      text-align: center;
+    body {
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      height: 100%;
     }
-
-    .section h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-    }
-
     canvas {
       position: fixed;
       top: 0;
       left: 0;
       z-index: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
     }
-
-    .content {
+    .section {
       position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 10;
-      max-width: 700px;
+      text-align: center;
+      padding: 2rem;
     }
-
-    .gradient {
-      background: linear-gradient(to bottom, #1e1e1e, #0d0d0d);
+    .section h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .section p {
+      font-size: 1.2rem;
+      max-width: 800px;
+    }
+    .content {
+      z-index: 10;
+      position: relative;
+      animation: fadeIn 1.5s ease-in;
+    }
+    #priceTagle {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      font-size: 1rem;
+      background: #00ff99;
+      color: #000;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+      z-index: 20;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
 <body>
   <canvas id="chart"></canvas>
+  <div id="priceTagle">$DaNTagle: 0.003420 USDT</div>
 
-  <div class="section gradient">
+  <div class="section">
     <div class="content">
       <h1>Genesis Block (2009–2013)</h1>
-      <p>Minería de ideas en ingeniería y publicidad. El valor de $DaNTagle comienza a existir.</p>
+      <p>Formación técnica e intelectual: ingeniería civil industrial, luego publicidad. Primeras incursiones en la industria creativa como Cool Hunter y Copywriter en Ogilvy. Se minan los primeros valores: curiosidad, estrategia, storytelling.</p>
     </div>
   </div>
 
-  <div class="section gradient">
+  <div class="section">
     <div class="content">
-      <h1>Primer Bull Market (2014–2017)</h1>
-      <p>Creatividad, redes sociales y contenido. Empieza la validación en agencias.</p>
+      <h1>Minería Intensiva (2014–2017)</h1>
+      <p>Consolidación como Community Manager, Social Media Manager y Director Digital. Estrategias innovadoras, campañas premiadas y posicionamiento en agencias como Proximity BBDO y Why. Se acumula valor en engagement, creatividad y dirección de contenidos.</p>
     </div>
   </div>
 
-  <div class="section gradient">
+  <div class="section">
     <div class="content">
-      <h1>All Time High (2018–2020)</h1>
-      <p>$DaNTagle dispara su valor con liderazgo, premios y resultados medibles.</p>
+      <h1>ATH #1 – Auge y Reconocimiento (2018–2020)</h1>
+      <p>En Wunderman Thompson se alcanza el primer All-Time High: liderazgo de grandes equipos, incremento exponencial en leads y rendimiento. Reducción de CAC, premios internacionales y jurado en festivales. Se fortalece el valor de mercado de $DaNTagle con resultados comprobables.</p>
     </div>
   </div>
 
-  <div class="section gradient">
+  <div class="section">
     <div class="content">
       <h1>Bear Market Estratégico (2021–2023)</h1>
-      <p>Reorganización, aprendizaje de IA y exploración de nuevos territorios.</p>
+      <p>Una etapa de consolidación silenciosa. Dirección digital en Espinaca: campañas masivas como Navidad de Correos de Chile, expansión del equipo y optimización de costos. Transición hacia la tecnología, análisis de datos e implementación de IA aplicada al marketing.</p>
     </div>
   </div>
 
-  <div class="section gradient">
+  <div class="section">
     <div class="content">
-      <h1>Solucionador y el renacer (2024)</h1>
-      <p>Independencia, innovación y la construcción de una DApp de impacto.</p>
+      <h1>Tokenización e Independencia (2024)</h1>
+      <p>Nacimiento de <strong>Solucionador.cl</strong>. Consultorías en marketing digital, incursiones en metaverso y capacitación en IA. Aplicación de growth hacking y performance marketing para distintos clientes en LATAM. Se convierte en un activo flexible, estratégico y escalable.</p>
     </div>
   </div>
 
-  <div class="section gradient">
+  <div class="section">
     <div class="content">
-      <h1>ATH con Orionx (2025)</h1>
-      <p>El momento de staking. Esta es la red ideal para llegar al máximo histórico.</p>
+      <h1>ATH #2 – Ready for Impact (2025)</h1>
+      <p>$DaNTagle se proyecta como un activo de alto impacto para equipos que necesitan visión, estrategia y ejecución con innovación. Con experiencia en fintech, salud, seguros y retail, ahora apunta a construir soluciones con propósito, datos y narrativa.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="content">
+      <h1>¿Listo para invertir en talento?</h1>
+      <p>Conectemos para llevar tus campañas, productos o comunidades al próximo nivel. $DaNTagle está preparado para sumar valor real.</p>
+      <p><a href="mailto:dan.tagle2023@gmail.com" style="color:#00ff99; font-weight:bold;">📩 dan.tagle2023@gmail.com</a><br/>
+      <a href="https://linkedin.com/in/taglecl" style="color:#00ff99">🔗 LinkedIn</a> | <a href="https://behance.net/kulhunter" style="color:#00ff99">🎨 Portfolio</a></p>
     </div>
   </div>
 
@@ -106,27 +133,28 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    let points = [
-      100, 150, 300, 200, 400, 220, 180, 300 // valores verticales del gráfico
-    ];
+    const keyMoments = [100, 200, 400, 300, 350, 500];
+    const points = [...keyMoments];
+    let t = 0;
 
-    window.addEventListener('scroll', () => {
-      const scroll = window.scrollY;
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
-      const t = scroll / maxScroll;
-      drawChart(t);
-    });
+    function updatePointsFromScroll(progress) {
+      for (let i = 0; i < points.length; i++) {
+        const base = keyMoments[i];
+        points[i] = base + Math.sin(progress * 10 + t + i) * 15;
+      }
+    }
 
-    function drawChart(t) {
+    function drawChart(progress) {
+      updatePointsFromScroll(progress);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();
       ctx.strokeStyle = '#00ff99';
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 3;
 
       const step = canvas.width / (points.length - 1);
       for (let i = 0; i < points.length; i++) {
         const x = step * i;
-        const y = canvas.height - (points[i] + Math.sin(t * 10 + i) * 10);
+        const y = canvas.height - points[i];
         if (i === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
@@ -134,4 +162,24 @@
       ctx.stroke();
     }
 
-    draw
+    function animateChart() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const progress = scrollTop / docHeight;
+      drawChart(progress);
+      t += 0.01;
+      requestAnimationFrame(animateChart);
+    }
+
+    animateChart();
+
+    setInterval(() => {
+      const fluctuation = (Math.random() * 0.0001).toFixed(6);
+      const direction = Math.random() > 0.5 ? 1 : -1;
+      const current = parseFloat(document.getElementById("priceTagle").textContent.match(/[\d.]+/)[0]);
+      const newPrice = (current + fluctuation * direction).toFixed(6);
+      document.getElementById("priceTagle").textContent = `$DaNTagle: ${newPrice} USDT`;
+    }, 1500);
+  </script>
+</body>
+</html>
