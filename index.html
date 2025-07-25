@@ -12,6 +12,7 @@
       font-family: 'Segoe UI', sans-serif;
       background: #0a0a0a;
       color: white;
+      scroll-behavior: smooth; /* Para el desplazamiento suave */
     }
 
     body {
@@ -31,13 +32,14 @@
 
     .section {
       position: relative;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 10;
       text-align: center;
-      padding: 2rem;
+      padding: 4rem 2rem;
+      box-sizing: border-box;
     }
 
     .section h1 {
@@ -48,6 +50,7 @@
     .section p {
       font-size: 1.2rem;
       max-width: 800px;
+      line-height: 1.6;
     }
 
     .content {
@@ -70,7 +73,7 @@
       padding: 0.5rem 1rem;
       border-radius: 20px;
       font-weight: bold;
-      z-index: 20;
+      z-index: 1001;
     }
 
     #chartInfo {
@@ -81,7 +84,7 @@
       padding: 0.5rem 1rem;
       border-radius: 5px;
       font-size: 0.8rem;
-      z-index: 20;
+      z-index: 1001;
     }
 
     @keyframes fadeIn {
@@ -92,6 +95,7 @@
     a {
       transition: color 0.3s ease;
       text-decoration: none;
+      color: #00ff99;
     }
 
     a:hover {
@@ -102,70 +106,390 @@
     strong {
       color: #00ff99;
     }
+    
+    .experience-trigger {
+        cursor: pointer;
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        transition: color 0.3s ease, text-decoration-color 0.3s ease;
+    }
+    .experience-trigger:hover {
+        color: #fff !important;
+        text-decoration-color: #fff;
+    }
+
+    /* --- Estilos del Modal --- */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7);
+      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.5s;
+    }
+
+    .modal-content {
+      background-color: #111;
+      margin: 5% auto;
+      padding: 25px;
+      border: 1px solid #00ff99;
+      width: 80%;
+      max-width: 700px;
+      border-radius: 10px;
+      position: relative;
+      text-align: left;
+    }
+    
+    .modal-content h2, .modal-content h3 {
+        text-align: center;
+        color: #00ff99;
+        margin-bottom: 20px;
+    }
+     .modal-content h3 {
+        font-size: 1.2rem;
+        margin-top: 25px;
+        border-top: 1px solid #333;
+        padding-top: 20px;
+     }
+
+    .modal-content ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+    .modal-content ul li {
+        margin-bottom: 10px;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+     .modal-content ul li::before {
+        content: "✓";
+        color: #00ff99;
+        margin-right: 10px;
+        font-weight: bold;
+     }
+
+    .close-button {
+      color: #aaa;
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+      color: white;
+      text-decoration: none;
+    }
+    
+    .recommendation {
+        border-bottom: 1px solid #333;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+    .recommendation:last-child {
+        border-bottom: none;
+    }
+    .recommendation p {
+        font-size: 1rem;
+        font-style: italic;
+        white-space: pre-wrap;
+    }
+    .recommendation .author {
+        font-style: normal;
+        font-weight: bold;
+        text-align: right;
+        color: #00ff99;
+    }
+    .modal-trigger-btn {
+        background-color: #00ff99;
+        color: #000 !important;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        text-decoration: none !important;
+        display: inline-block;
+        margin-top: 1rem;
+        cursor: pointer;
+    }
+    .modal-trigger-btn:hover {
+        background-color: #fff;
+        color: #000 !important;
+    }
+    
+    /* --- Estilos Calculadora --- */
+    .calculator-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 2rem;
+        text-align: left;
+        align-items: end;
+    }
+    @media (min-width: 768px) {
+        .calculator-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    .calculator-grid label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    .calculator-grid select, .calculator-grid input {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 5px;
+        border: 1px solid #00ff99;
+        background-color: #222;
+        color: white;
+        font-size: 1rem;
+    }
+    .calculator-grid button {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 5px;
+        border: none;
+        background-color: #00ff99;
+        color: #000;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .calculator-grid button:hover {
+        background-color: #fff;
+    }
+    #offer-response {
+        margin-top: 1.5rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+        padding: 1rem;
+        border-radius: 5px;
+        display: none; /* Oculto por defecto */
+    }
+    #offer-response.success {
+        background-color: rgba(0, 255, 153, 0.2);
+        border: 1px solid #00ff99;
+        color: #00ff99;
+    }
+     #offer-response.warning {
+        background-color: rgba(255, 165, 0, 0.2);
+        border: 1px solid orange;
+        color: orange;
+    }
+    #offer-response.error {
+        background-color: rgba(255, 0, 102, 0.2);
+        border: 1px solid #ff0066;
+        color: #ff0066;
+    }
+    
+    .skip-button {
+        display: inline-block;
+        margin-top: 2rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid #00ff99;
+        border-radius: 20px;
+        color: #00ff99;
+        background-color: transparent;
+        font-weight: bold;
+        text-decoration: none;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .skip-button:hover {
+        background-color: #00ff99;
+        color: #000 !important;
+        text-decoration: none;
+    }
+
   </style>
 </head>
 <body>
   <canvas id="chart"></canvas>
   <div id="priceTagle">Cargando valor $daN.Tagle...</div>
-  <div id="chartInfo">$daN.Tagle = 1.5 ETH | Valor en tiempo real</div>
+  <div id="chartInfo">$daN.Tagle = 1 ETH | Valor en tiempo real</div>
 
-    <div class="section">
+  <div class="section">
     <div class="content">
       <h1>🧭 Roadmap Dan Tagle – Full Stack Marketer </h1>
-      <p>No es un CV. Es una cadena de bloques narrativos.
-Cada etapa, un bloque. Cada logro, una transacción validada por la experiencia.
-Soy Dan Tagle, Full Stack Marketer. Esta es mi historia profesional, relatada como un whitepaper personal, donde el storytelling se encuentra con la estrategia, y la creatividad con la data.
-
-Desde el Genesis Block hasta el próximo ATH: esto no es solo marketing, es proof of work.
-
-¿Listos para scrollear?</p>
+      <p>No es un CV. Es una cadena de bloques narrativos. Cada etapa, un bloque. Cada logro, una transacción validada por la experiencia. Soy Dan Tagle, Full Stack Marketer. Esta es mi historia profesional, relatada como un whitepaper personal, donde el storytelling se encuentra con la estrategia, y la creatividad con la data.<br><br>Desde el Genesis Block hasta el próximo ATH: esto no es solo marketing, es <strong>Proof of Work</strong>.</p>
+      <a href="#calculator-section" class="skip-button">¿Ya leíste el whitepaper? Saltar al Mainnet (Validar Oferta)</a>
     </div>
   </div>
   
   <div class="section">
     <div class="content">
-      <h1>Genesis Block (2009–2013)</h1>
-      <p>Formación técnica e intelectual: ingeniería civil industrial, luego publicidad. Primeras incursiones en la industria creativa como Cool Hunter y Copywriter en Ogilvy. Se minan los primeros valores: curiosidad, estrategia, storytelling.</p>
+      <h1>Genesis Block: Formación (2006–2020)</h1>
+      <p>El bloque inicial se mina con una base dual: estudios de <strong>Ingeniería Civil Industrial</strong> en la U. de Valparaíso (2006-2008) y <strong>Publicista</strong> de la U. Los Leones (2009-2013), titulado con <strong>Distinción Máxima</strong>. El protocolo se actualiza con posgrados en <strong>Marketing Gerencial</strong> de la U. de Chile (2019) y <strong>Transformación Digital</strong> del <strong>MIT</strong> (2019-2020).</p>
     </div>
   </div>
 
   <div class="section">
     <div class="content">
-      <h1>Minería Intensiva (2014–2017)</h1>
-      <p>Consolidación como Community Manager, Social Media Manager y Director Digital. Campañas como <a href="https://www.behance.net/gallery/44019443/SSangyong-Actyon-Sports-ADS-realtime" target="_blank" style="color:#00ff99;">Ssangyong en tiempo real</a> mostraban creatividad aplicada a la tecnología. Reconocido con un <a href="https://www.behance.net/gallery/20824907/MIDEA-Growth-Chile-Lanzamiento-Win-Effie" target="_blank" style="color:#00ff99;">Effie para Midea</a> desde Proximity BBDO y nombrado Director Creativo en Why <a href="https://www.adlatina.com/publicidad/why-chile-suma-3-nuevos-clientes" target="_blank" style="color:#00ff99;">(ver noticia)</a>. El crecimiento era claro, y el engagement subía como el hash rate en temporada alta.</p>
+      <h1>Bloque #1: Primeras Transacciones (2010-2012)</h1>
+      <p>La red se activa con prácticas profesionales: como Planning Assistant en <strong class="experience-trigger" data-modal-target="modal-soletanche">Soletanche Bachy</strong> y como Trainee Cool Hunter en <strong class="experience-trigger" data-modal-target="modal-ogilvy">OgilvyOne Worldwide</strong>, investigando tendencias para marcas globales.</p>
     </div>
   </div>
 
   <div class="section">
     <div class="content">
-      <h1>ATH #1 – Auge y Reconocimiento (2018–2020)</h1>
-      <p>En Wunderman Thompson se alcanza el primer All-Time High: liderazgo de grandes equipos, incremento en leads y performance. Caso de éxito para DercoCenter <a href="https://www.produ.com/mercadeo/noticias/dercocenter-y-wunderman-presentan-caso-de-exito-en-chile/" target="_blank" style="color:#00ff99;">(ver caso)</a>, y campaña icónica <a href="https://www.behance.net/gallery/48577569/SEXSHOPCHILE-TWO-METHODS" target="_blank" style="color:#00ff99;">SEXSHOPCHILE premiada en WINA</a>. Reconocido internacionalmente como <a href="https://creativepool.com/Dondt/about" target="_blank" style="color:#00ff99;">Emerging Talent of the Year en Creativepool</a> y Silver por <a href="https://www.behance.net/gallery/79370809/Bupa-Maps-with-Memory" target="_blank" style="color:#00ff99;">BUPA Maps with Memory</a>.</p>
+      <h1>Bloque #2: Forjando el Protocolo Creativo (2012-2013)</h1>
+      <p>En <strong class="experience-trigger" data-modal-target="modal-factory">Agencia the Factory</strong>, como Copywriter & Digital Strategist, se minan los primeros premios (Plata en ACHAP 2012) y se gestionan campañas para marcas como Pepsico y Sony.</p>
     </div>
   </div>
 
   <div class="section">
     <div class="content">
-      <h1>Tokenización e Independencia (2024)</h1>
-      <p>Nacimiento de <strong>Solucionador.cl</strong>. Consultorías en marketing digital, incursiones en metaverso y capacitación en IA. Aplicación de growth hacking y performance marketing para distintos clientes en LATAM. Se convierte en un activo flexible, estratégico y escalable.</p>
+      <h1>Bloque #3: Aumento del Hash Rate (2013-2015)</h1>
+      <p>El poder de cómputo se expande en <strong class="experience-trigger" data-modal-target="modal-proximity">Proximity Worldwide</strong> como Social Media Manager, creando y liderando el departamento de redes sociales para cuentas como Sodimac y Savory.</p>
     </div>
   </div>
 
   <div class="section">
     <div class="content">
-      <h1>ATH #2 – Ready for Impact (2025)</h1>
-      <p>$DaNTagle se proyecta como un activo de alto impacto para equipos que necesitan visión, estrategia y ejecución con innovación. Con experiencia en fintech, salud, seguros y retail, ahora apunta a construir soluciones con propósito, datos y narrativa.</p>
+      <h1>Bloque #4: Consolidación y Docencia (2014-2017)</h1>
+      <p>Se bifurca la cadena: mientras se escala a Director Creativo y de Estrategia en <strong class="experience-trigger" data-modal-target="modal-why">Why.</strong>, se comparte el conocimiento como <strong class="experience-trigger" data-modal-target="modal-leones">Docente</strong> en el Inst. Prof. Los Leones, siendo evaluado como el mejor de la carrera.</p>
     </div>
   </div>
+
+  <div class="section">
+    <div class="content">
+      <h1>Bloque #5: Alcanzando el Primer ATH (2017–2020)</h1>
+      <p>En <strong class="experience-trigger" data-modal-target="modal-wt">Wunderman Thompson</strong> se alcanza un All-Time High. Ingresando como Social Media Strategist y escalando a Director Digital, se lideran estrategias que generan un crecimiento de <strong>+166% en leads SQL</strong> y se obtienen premios como un <a href="https://www.behance.net/gallery/79370809/Bupa-Maps-with-Memory" target="_blank"><strong>Silver en Creativepool</strong></a>.</p>
+    </div>
+  </div>
+  
+  <div class="section">
+    <div class="content">
+      <h1>Bloque #6: El Protocolo Descentralizado (2020-2024)</h1>
+      <p>La cadena se diversifica: como Director Digital en <strong class="experience-trigger" data-modal-target="modal-espinaca">Espinaca</strong>, se lidera la premiada campaña de Navidad para Correos de Chile. En paralelo, como <strong class="experience-trigger" data-modal-target="modal-duoc">Docente</strong> en Duoc UC y Founder de <strong class="experience-trigger" data-modal-target="modal-solucionador">Solucionador.cl</strong>, el protocolo se vuelve flexible y escalable.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="content">
+      <h1>Bloque #7: Nodos Corporativos y Hard Fork (2024-Presente)</h1>
+       <p>Se minan bloques en roles temporales de alta estrategia para <strong class="experience-trigger" data-modal-target="modal-norte">Norte Digital LATAM</strong> y <strong class="experience-trigger" data-modal-target="modal-craft">Craft Worldwide (Aramco)</strong>. La validación externa del PoW alcanza un nuevo máximo: reconocido como <strong><a href="https://creativepool.com/Dondt/" target="_blank">Creative Technologist #1 del mundo en 2025 por Creativepool</a></strong>. Un hard fork estratégico lleva a unirse a <strong class="experience-trigger" data-modal-target="modal-2win">2Win</strong> como Marketing Jedi.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="content">
+      <h1>El Stack Tecnológico: Certificaciones</h1>
+      <p>Un protocolo robusto requiere un stack completo. La cadena está validada por certificaciones en <strong>Análisis de Datos, Gestión de Proyectos (PMI), Fintech, Power BI, Google Analytics, GenAI, Prompt Engineering, Bitcoin y NFTs</strong>, entre muchas otras. Un arsenal completo para ejecutar estrategias end-to-end.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="content">
+        <h1>Proof of Stake: La Confianza de la Red</h1>
+        <p>La fortaleza de una red se mide por la confianza de sus nodos. Colegas, líderes y estudiantes han validado este recorrido a través de sus recomendaciones, el "stake" que respalda la trayectoria. </p>
+        <span class="modal-trigger-btn" data-modal-target="recommendationsModal">Ver Prueba de Confianza (Recomendaciones)</span>
+    </div>
+  </div>
+  
+  <!-- INICIO CALCULADORA -->
+  <div class="section" id="calculator-section">
+    <div class="content">
+      <h1>Validación de Oferta (Proof of Offer)</h1>
+      <p>¿Interesado en minar el próximo bloque juntos? Valida tu oferta en la red. El valor de <strong>1 $daN.Tagle</strong> está anclado 1:1 al precio de <strong>1 ETH</strong>.</p>
+      <div class="calculator-grid">
+          <div>
+              <label for="job-type">Tipo de Colaboración</label>
+              <select id="job-type">
+                  <option value="fulltime">Full-time Presencial (8h/día)</option>
+                  <option value="parttime">Part-time Remoto (2h/día)</option>
+                  <option value="course">Curso Part-time (2h total)</option>
+                  <option value="project">Proyecto Específico (por hora)</option>
+              </select>
+          </div>
+          <div>
+              <label for="currency">Moneda de la Oferta</label>
+              <select id="currency">
+                  <option value="USD">USD</option>
+                  <option value="CLP">CLP (Peso Chileno)</option>
+                  <option value="MXN">MXN (Peso Mexicano)</option>
+                  <option value="COP">COP (Peso Colombiano)</option>
+              </select>
+          </div>
+          <div>
+              <label for="budget">Tu Presupuesto</label>
+              <input type="number" id="budget" placeholder="Ej: 3500">
+          </div>
+      </div>
+       <button id="validate-offer-btn" class="modal-trigger-btn" style="width: 100%; margin-top: 1rem;">Validar Oferta</button>
+       <div id="offer-response"></div>
+    </div>
+  </div>
+  <!-- FIN CALCULADORA -->
 
   <div class="section">
     <div class="content">
       <h1>¿Listo para activar el próximo paso?</h1>
-      <p>Explora el portafolio de campañas, revisa la experiencia en cargos claves y conecta directamente para construir algo con impacto real.</p>
+      <p>Contáctame. Despleguemos juntos el próximo contrato inteligente.</p>
       <p>
         <a href="https://behance.net/kulhunter" style="color:#00ff99; font-weight:bold;">🎨 Ver trabajos en Behance</a><br/>
-        <a href="https://linkedin.com/in/taglecl" style="color:#00ff99; font-weight:bold;">🔗 Conocer experiencia en LinkedIn</a><br/>
-        <a href="mailto:dan.tagle2023@gmail.com" style="color:#00ff99; font-weight:bold;">📩 Contactar por correo</a>
+        <a href="https://linkedin.com/in/taglecl" style="color:#00ff99; font-weight:bold;">🔗 Conectar en LinkedIn</a><br/>
+        <a href="mailto:dan.tagle2023@gmail.com" style="color:#00ff99; font-weight:bold;">📩 Iniciar conversación por correo</a>
       </p>
+    </div>
+  </div>
+
+  <!-- Modales de Experiencia -->
+  <div id="modal-2win" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Marketing Jedi - 2Win (jun. 2025 - Presente)</h2></div></div>
+  <div id="modal-craft" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Project Manager & Comms Planner - Aramco - Astop (Craft Worldwide)</h2><h3>ene. 2025 - may. 2025 · 5 meses</h3><ul><li>Coordinación de equipos internos y externos, asegurando la alineación con los objetivos de negocio y la ejecución eficiente de las campañas.</li><li>Monitoreo y análisis de métricas clave, con optimización continua.</li><li>Gestión de crisis y desarrollo de planes de acción efectivos para mitigar riesgos.</li><li>Dirección y QA de lineamientos creativos y de marca alineados a guideline globales.</li><li>Liderazgo en la planificación y ejecución de material in-store para potenciar la experiencia de marca en la red de tiendas ASTOP en Chile.</li><li>Planificación, ejecución y desarrollo de automatización para optimización de flujos de trabajo.</li></ul></div></div>
+  <div id="modal-norte" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Head of accounts - Norte Digital LATAM</h2><h3>may. 2024 - ago. 2024 · 4 meses</h3><ul><li>Dirección de la estrategia de marketing digital y gestión de cuentas clave, optimizando campañas de performance marketing.</li><li>Supervisión de equipos de Key Account Managers para asegurar la correcta ejecución de campañas publicitarias.</li><li>Incremento del retorno sobre la inversión (ROI) mediante análisis de datos y automatización de procesos.</li></ul></div></div>
+  <div id="modal-espinaca" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Director digital - Espinaca</h2><h3>dic. 2020 - dic. 2023 · 3 años 1 mes</h3><ul><li>Expansión del equipo digital, optimización de costos y aumento de la rentabilidad.</li><li>Creación y ejecución de campañas destacadas, como la Navidad de Correos de Chile, que obtuvo un alto impacto en el mercado.</li><li>Implementación de estrategias de contenido y performance marketing, generando resultados positivos y medibles.</li></ul></div></div>
+  <div id="modal-duoc" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Docente Diplomado Marketing Digital - Duoc UC</h2><h3>mar. 2019 - 2023 · 3 años 11 meses</h3><ul><li>Teach digital marketing. Mkt Digital + Copywriting + strategy + Social media + automation + community management</li></ul></div></div>
+  <div id="modal-solucionador" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Founder & Consultor - Solucionador.cl (ene. 2021 - Presente)</h2></div></div>
+  <div id="modal-wt" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Wunderman Thompson (3 años 3 meses)</h2><h3>Director digital (oct. 2019 - oct. 2020 · 1 año 1 mes)</h3><ul><li>Dirección de un equipo de marketing digital y social media, asegurando la correcta alineación con los objetivos de negocio.</li><li>Incremento del 166% en leads SQL y reducción del costo de adquisición de clientes (CAC) en un 47%.</li><li>Optimización de estrategias SEO y contenido, logrando un crecimiento del tráfico orgánico del 30%.</li><li>Atendiendo clientes como: MetLife, AFP ProVida, Nescafé, Dercocenter, INACAP, Cpech, Grupo BUPA, Ford, entre otros.</li></ul><h3>Social Media Strategist (ago. 2017 - sept. 2019 · 2 años 2 meses)</h3><ul><li>Gestión de campañas digitales para marcas globales como Derco, ProVida, MetLife, Nescafé, Cpech, Unilever, Bayer, entre otras.</li><li>Innovación constante en la creación de estrategias digitales, con un enfoque en la creatividad y el análisis de datos.</li><li>Reconocimiento como jurado en los festivales Young Cannes y Ojo de Iberoamérica.</li></ul></div></div>
+  <div id="modal-why" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Why. (2 años 1 mes)</h2><h3>Creative Digital Director (mar. 2016 - mar. 2017 · 1 año 1 mes)</h3><ul><li>Desarrollo de estrategias digitales innovadoras para marcas como BUPA, Ssangyong y KidZania.</li><li>Implementación de campañas de storytelling y contenido interactivo.</li><li>Clientes: Yamaha, Euromot, KidZania, Sal Lobos, Ssangyong, Integramédica, CruzBlanca, Bupa, etc.</li><li>Jurado en Fiap 2016.</li></ul><h3>Social media strategist (mar. 2015 - mar. 2016 · 1 año 1 mes)</h3><ul><li>Creativity + Data + Strategy + storydoing + Social Media.</li><li>Clientes: KidZania, Yamaha, Foster, Ilko, Virutex, Enjoy, etc.</li></ul></div></div>
+  <div id="modal-leones" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Docente: Publicidad y Producción de eventos - Instituto Profesional Los Leones</h2><h3>mar. 2014 - dic. 2015 · 1 año 10 meses</h3><ul><li>Docente de las carreras: Publicidad y Producción de eventos.</li><li>Asignaturas de redes sociales, publicidad, marketing digital y estrategia.</li><li>Evaluado como el mejor docente de la carrera de Publicidad y de la carrera de Producción de eventos Gen. 2014.</li></ul></div></div>
+  <div id="modal-proximity" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Social Media Manager - Proximity Worldwide</h2><h3>oct. 2013 - may. 2015 · 1 año 8 meses</h3><ul><li>Creación y gestión del departamento de redes sociales.</li><li>Gestión de cuentas clave como Sodimac Constructor, Savory y Midea Electrodomésticos.</li><li>Dirección de campañas en redes sociales, optimizando la estrategia para aumentar la visibilidad de marca.</li></ul></div></div>
+  <div id="modal-factory" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Copywriter & Digital Strategist - Agencia the Factory</h2><h3>sept. 2012 - oct. 2013 · 1 año 2 meses</h3><ul><li>Creación de estrategias de contenido y gestión de redes sociales.</li><li>Redacción publicitaria y desarrollo de campañas digitales.</li><li>Clientes: Pepsico, Sony, Playstation, Instore, Shot & Go, Undurraga.</li><li>Premios: Win Achap 2012 Silver, The most awarded independent agency of the year, Winners at the Chilemonos International Festival 2013.</li></ul></div></div>
+  <div id="modal-ogilvy" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Trainee Cool Hunter - OgilvyOne Worldwide</h2><h3>jun. 2011 - jun. 2012 · 1 año 1 mes</h3><ul><li>Investigación de tendencias de consumo para la marca Milo y creación de contenido para campañas web.</li></ul></div></div>
+  <div id="modal-soletanche" class="modal"><div class="modal-content"><span class="close-button">&times;</span><h2>Trainee Planning Assistant - Soletanche Bachy</h2><h3>dic. 2010 - mar. 2011 · 4 meses</h3><ul><li>Industrial Civil Engineering Trainee. Mina "El Teniente".</li></ul></div></div>
+
+  <!-- El Modal de Recomendaciones -->
+  <div id="recommendationsModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2>Prueba de Confianza (Recomendaciones)</h2>
+      <div class="recommendation">
+        <p>Conocí a Daniel entrevistándolo para una práctica. Era un día de verano, hacían 35 grados y cayó vestido con un saco de pana, absolutamente transpirado y con el pelo como Jimmy Neutron. Además tartamudeaba al hablar por los nervios.
+Como me dió ternurita le dije que empezara el lunes. Total yo mucho no tenía que perder, a lo más era otro practicante que no funcionaba... aunque me gustaría pensar que "algo" le ví.
+Se ganó el lugar en la agencia casi de inmediato ya que una de las cualidades de Daniel es que siempre está creciendo. Tiene esa característica que le gusta a todo jefe: si no sabe algo lo aprende.
+Solucionador a morir, cualquier brief le viene bien. Sabe sacar provecho de las herramientas digitales que tiene a la mano y eso generalmente produce grandes ahorros de dinero para el lugar en el que está trabajando.
+La vida después lo llevó por otros lugares y a aprender nuevas habilidades, pero casi siempre terminamos "juntándonos para hacer algo" y generando nuevos proyectos.
+Quien lo tenga entre sus filas, tiene un diamante en bruto... que muchas veces es más bruto que diamante, pero hay que saberlo tratar para que brille.</p>
+        <p class="author">- Andrés Tampassi (supervisó a Dan)</p>
+      </div>
+      <div class="recommendation">
+        <p>Daniel es un líder capaz de motivarte y desafiarte profesionalmente cada día, es una persona que siempre te dará una respuesta y seguirá en constante actualización para mejorar sus capacidades. 
+
+Con él he aprendido a superarme, a estar en constante cambio y a ser capaz de integrarme en diferentes áreas.</p>
+        <p class="author">- Emilio Otero Valenzuela (supervisado por Dan)</p>
+      </div>
+       <div class="recommendation">
+        <p>Un agrado trabajar junto a Daniel, excelente profesional y sobretodo una muy buena persona. Tiene grandes capacidades creativas tanto conceptualmente para campañas más off, como en estrategias digitales y grandes comunidades. Tiene un gran sentido del trabajo en equipo y eso se agradece.</p>
+        <p class="author">- Julio Orellana Ovalle (supervisado por Dan)</p>
+      </div>
+      <div class="recommendation">
+        <p>Daniel es una Director Creativo Integral, con sólidos conocimientos en estrategia de RRSS, creatividad masiva y digital, un perfil muy escaso y necesario en la época actual. Su pasión por la creatividad es la mezcla perfecta con el ímpetu que tiene por el trabajo de calidad que destaca por sobre la competencia. [...] Sin duda llegará muy lejos en su carrera.</p>
+        <p class="author">- Francisco Calderón (cargo superior a Dan)</p>
+      </div>
+      <div class="recommendation">
+        <p>Daniel es una de las personas más creativas que he conocido, fui su profesor y me impresionó la facilidad y rapidez con que llega a soluciones tomando caminos que la mayoría pasaría por alto. También es bueno trabajando en grupo, competencia que los alumnos talentosos a veces no explotan.</p>
+        <p class="author">- M. Javier Glisser Zapata (profesor de Dan)</p>
+      </div>
     </div>
   </div>
 
@@ -178,6 +502,7 @@ Desde el Genesis Block hasta el próximo ATH: esto no es solo marketing, es proo
     let priceHistory = [];
     let lastUpdateTime = 0;
     let scrollPosition = 0;
+    let exchangeRates = {};
 
     function resizeCanvas() {
       canvas.width = window.innerWidth;
@@ -187,89 +512,55 @@ Desde el Genesis Block hasta el próximo ATH: esto no es solo marketing, es proo
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Generar datos iniciales más estables
     function generateCandles() {
       const candles = [];
       const now = Date.now();
       const hours = 24;
-      const interval = 3600000; // 1 hora en ms
-      
+      const interval = 3600000;
       let basePrice = ethPrice > 0 ? ethPrice : 3000;
-      
       for (let i = 0; i < hours; i++) {
         const time = now - (hours - i) * interval;
         const open = basePrice;
-        // Reducir la volatilidad para movimiento más suave
         const volatility = Math.random() * 0.008 * basePrice;
         const close = open + (Math.random() > 0.5 ? volatility : -volatility);
         const high = Math.max(open, close) + Math.random() * volatility * 0.5;
         const low = Math.min(open, close) - Math.random() * volatility * 0.5;
-        
-        candles.push({
-          time,
-          open,
-          high,
-          low,
-          close,
-        });
-        
+        candles.push({ time, open, high, low, close });
         basePrice = close;
       }
-      
       return candles;
     }
 
-    // Dibujar el gráfico con efecto parallax
     function drawCandlestickChart() {
       if (priceHistory.length === 0) return;
-      
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
       const margin = 50;
       const width = canvas.width - margin * 2;
       const height = canvas.height - margin * 2;
       const candleWidth = width / priceHistory.length * 0.8;
-      
-      // Calcular rangos de precio con márgenes
       let maxPrice = Math.max(...priceHistory.map(c => c.high));
       let minPrice = Math.min(...priceHistory.map(c => c.low));
       const priceRange = maxPrice - minPrice;
       maxPrice += priceRange * 0.2;
       minPrice = Math.max(0, minPrice - priceRange * 0.2);
-      
-      // Aplicar efecto parallax basado en scroll
       const parallaxOffset = scrollPosition * 0.2;
-      
-      // Dibujar cada vela con movimiento más suave
       priceHistory.forEach((candle, i) => {
         const x = margin + i * (width / priceHistory.length) + candleWidth * 0.1 + parallaxOffset;
         const yOpen = margin + height - ((candle.open - minPrice) / (maxPrice - minPrice)) * height;
         const yClose = margin + height - ((candle.close - minPrice) / (maxPrice - minPrice)) * height;
         const yHigh = margin + height - ((candle.high - minPrice) / (maxPrice - minPrice)) * height;
         const yLow = margin + height - ((candle.low - minPrice) / (maxPrice - minPrice)) * height;
-        
-        // Línea de alto-bajo más sutil
         ctx.beginPath();
         ctx.moveTo(x + candleWidth/2, yHigh);
         ctx.lineTo(x + candleWidth/2, yLow);
         ctx.strokeStyle = candle.close >= candle.open ? 'rgba(0, 255, 153, 0.5)' : 'rgba(255, 0, 102, 0.5)';
         ctx.lineWidth = 1;
         ctx.stroke();
-        
-        // Cuerpo de la vela semitransparente
         ctx.fillStyle = candle.close >= candle.open ? 'rgba(0, 255, 153, 0.3)' : 'rgba(255, 0, 102, 0.3)';
-        ctx.fillRect(
-          x, 
-          Math.min(yOpen, yClose), 
-          candleWidth, 
-          Math.abs(yClose - yOpen)
-        );
+        ctx.fillRect(x, Math.min(yOpen, yClose), candleWidth, Math.abs(yClose - yOpen));
       });
-      
-      // Mostrar precio actual
       if (ethPrice > 0) {
         const currentY = margin + height - ((ethPrice - minPrice) / (maxPrice - minPrice)) * height;
-        
         ctx.beginPath();
         ctx.moveTo(margin, currentY);
         ctx.lineTo(margin + width, currentY);
@@ -281,72 +572,149 @@ Desde el Genesis Block hasta el próximo ATH: esto no es solo marketing, es proo
       }
     }
 
-    // Obtener precio de ETH con menos frecuencia
-    async function fetchEthPrice() {
-      try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
-        const data = await response.json();
-        ethPrice = data.ethereum.usd;
-        danTaglePrice = ethPrice * 1.5;
-        
-        priceDisplay.innerText = `$daN.Tagle: $${danTaglePrice.toFixed(2)} USD`;
-        
-        // Actualizar historial cada 10 minutos
-        const now = Date.now();
-        if (now - lastUpdateTime > 600000 || priceHistory.length === 0) {
-          priceHistory = generateCandles();
-          lastUpdateTime = now;
+    async function fetchAPIs() {
+        try {
+            // Fetch ETH Price
+            const ethResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+            if (!ethResponse.ok) throw new Error('Failed to fetch ETH price');
+            const ethData = await ethResponse.json();
+            ethPrice = ethData.ethereum.usd;
+            danTaglePrice = ethPrice;
+            priceDisplay.innerText = `$daN.Tagle: $${danTaglePrice.toFixed(2)} USD`;
+            
+            // Fetch Exchange Rates
+            const ratesResponse = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+            if (!ratesResponse.ok) throw new Error('Failed to fetch exchange rates');
+            const ratesData = await ratesResponse.json();
+            exchangeRates = ratesData.rates;
+
+            // Generate chart if needed
+            const now = Date.now();
+            if (now - lastUpdateTime > 600000 || priceHistory.length === 0) {
+                priceHistory = generateCandles();
+                lastUpdateTime = now;
+            }
+             if (priceHistory.length > 0) {
+                priceHistory[priceHistory.length - 1].close = ethPrice;
+                priceHistory[priceHistory.length - 1].high = Math.max(priceHistory[priceHistory.length - 1].high, ethPrice);
+                priceHistory[priceHistory.length - 1].low = Math.min(priceHistory[priceHistory.length - 1].low, ethPrice);
+            }
+
+        } catch (error) {
+            console.error('API Fetch Error:', error);
+            if (priceHistory.length === 0) {
+                ethPrice = 3000 + Math.random() * 500;
+                danTaglePrice = ethPrice;
+                priceHistory = generateCandles();
+            }
+            priceDisplay.innerText = `$daN.Tagle: $${danTaglePrice.toFixed(2)} USD (Simulado)`;
+            // Use fallback rates if API fails
+            if (Object.keys(exchangeRates).length === 0) {
+                exchangeRates = { USD: 1, CLP: 950, MXN: 18, COP: 4000 };
+            }
         }
-        
-        // Actualizar última vela con precio real
-        if (priceHistory.length > 0) {
-          priceHistory[priceHistory.length - 1].close = ethPrice;
-          priceHistory[priceHistory.length - 1].high = Math.max(priceHistory[priceHistory.length - 1].high, ethPrice);
-          priceHistory[priceHistory.length - 1].low = Math.min(priceHistory[priceHistory.length - 1].low, ethPrice);
-        }
-        
-      } catch (error) {
-        console.error('Error fetching ETH price:', error);
-        priceDisplay.innerText = '$daN.Tagle: Error actualizando precio';
-        
-        // Datos simulados más estables
-        if (priceHistory.length === 0) {
-          ethPrice = 3000 + Math.random() * 500;
-          danTaglePrice = ethPrice * 1.5;
-          priceHistory = generateCandles();
-        }
-      }
+        drawCandlestickChart();
     }
 
-    // Manejar scroll para efecto parallax
+
     function handleScroll() {
       scrollPosition = window.scrollY / (document.body.scrollHeight - window.innerHeight);
       drawCandlestickChart();
     }
+    
+    // --- Lógica de la Calculadora ---
+    const validateBtn = document.getElementById('validate-offer-btn');
+    validateBtn.addEventListener('click', () => {
+        const jobType = document.getElementById('job-type').value;
+        const currency = document.getElementById('currency').value;
+        const budget = parseFloat(document.getElementById('budget').value);
+        const responseEl = document.getElementById('offer-response');
 
-    // Configuración inicial
+        if (isNaN(budget) || budget <= 0) {
+            responseEl.className = 'error';
+            responseEl.innerText = 'Por favor, ingresa un presupuesto válido.';
+            responseEl.style.display = 'block';
+            return;
+        }
+
+        if (ethPrice === 0 || Object.keys(exchangeRates).length === 0) {
+            responseEl.className = 'error';
+            responseEl.innerText = 'Error al obtener datos de mercado. Intenta de nuevo.';
+            responseEl.style.display = 'block';
+            return;
+        }
+
+        let minBudgetUSD = 0;
+        const danPrice = danTaglePrice;
+
+        switch (jobType) {
+            case 'fulltime':
+                minBudgetUSD = danPrice + 300;
+                break;
+            case 'parttime':
+                minBudgetUSD = danPrice / 2;
+                break;
+            case 'course':
+                minBudgetUSD = (danPrice / 2) + 100;
+                break;
+            case 'project':
+                minBudgetUSD = danPrice / 10; // Per hour
+                break;
+        }
+
+        const offerInUSD = budget / exchangeRates[currency];
+        
+        responseEl.style.display = 'block';
+        if (offerInUSD < minBudgetUSD) {
+            responseEl.className = 'error';
+            responseEl.innerText = 'Transacción Rechazada: Fondos insuficientes. La red requiere un "gas fee" más alto. Súbele, wey.';
+        } else if (offerInUSD > minBudgetUSD * 1.5) {
+            responseEl.className = 'warning';
+            responseEl.innerText = '¡Alerta de Ballena! La red detectó una oferta inusualmente alta. ¿Seguro que no es un intento de lavado de activos? Si es en serio, contáctame de inmediato.';
+        } else {
+            responseEl.className = 'success';
+            responseEl.innerText = 'Oferta Validada en la Blockchain. Los nodos están de acuerdo. ¡Escríbeme para minar el siguiente bloque juntos!';
+        }
+    });
+
+
     window.addEventListener('scroll', handleScroll);
-    fetchEthPrice();
-    setInterval(fetchEthPrice, 60000); // Actualizar cada minuto
+    fetchAPIs();
+    setInterval(fetchAPIs, 60000);
 
-    // Animación más suave
     function animate() {
       requestAnimationFrame(animate);
-      
-      // Movimiento más lento y estable
       if (priceHistory.length > 0 && Math.random() > 0.9) {
         const lastCandle = priceHistory[priceHistory.length - 1];
-        const change = (Math.random() - 0.5) * 0.001 * lastCandle.close;
+        const change = (Math.random() - 0.5) * 0.005 * lastCandle.close;
         lastCandle.close += change;
-        
         if (lastCandle.close > lastCandle.high) lastCandle.high = lastCandle.close;
         if (lastCandle.close < lastCandle.low) lastCandle.low = lastCandle.close;
-        
         drawCandlestickChart();
       }
     }
-
     animate();
+
+    // --- Lógica del Modal ---
+    document.querySelectorAll('.experience-trigger, .modal-trigger-btn').forEach(trigger => {
+        trigger.addEventListener('click', function() {
+            const modalId = this.getAttribute('data-modal-target');
+            document.getElementById(modalId).style.display = 'block';
+        });
+    });
+
+    document.querySelectorAll('.modal .close-button').forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('.modal').style.display = 'none';
+        });
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    });
+
   </script>
 </body>
 </html>
